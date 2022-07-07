@@ -1,0 +1,24 @@
+~~ Total user based on gender
+select gender, count(*) as total_user
+from tb_user
+where gender is not null
+group by gender
+
+~~ Total User Based on Gender and University
+select  b.university_name, a.gender, count(*) total 
+from tb_user a
+left join tb_university b on a.university_id = b.university_id
+where b.university_name!= ''
+group by 1,2 
+
+~~ Total User Registered Daily
+select registered_date, count(*) total 
+from tb_user
+group by 1 
+order by 1 asc
+
+~~ Total User Registered Weekly
+select CAST(to_char(to_date(registered_date, 'yyyy-mm-dd'), 'IYYY-IW') AS VARCHAR ) year_week, count(*) total_user 
+from tb_user
+group by 1 s
+order by 1 asc 
