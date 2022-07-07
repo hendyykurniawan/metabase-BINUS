@@ -1,0 +1,82 @@
+~~ Total Cases Based on Island
+select island,  sum(total_case) as total_case
+from tb_covid
+group by 1
+order by 2 desc
+
+~~ Total of Recovered Based on Island
+select island,  sum(total_recovered) as total_case
+from tb_covid
+group by 1
+order by 2 desc
+
+~~ Total of Death Based on Island
+select island,  sum(total_death) as total_case
+from tb_covid
+group by 1
+order by 2 desc
+
+~~ Total Cases in 2020
+select sum(total_case) Total_Cases2020 
+from tb_covid
+
+~~ Total Recovered in 2020
+SELECT SUM(total_recovered)
+from tb_covid
+
+~~ Total Death in 2020
+SELECT SUM(total_death)
+from tb_covid
+
+~~ Total Case, Recovered, and Death Based on Province
+select b.province,  sum(a.total_case) as total_case,  sum(a.total_recovered) as total_recovered, sum(a.total_death) as total_death
+from tb_covid a 
+join tb_province b on a.province_id = b.id 
+group by 1 
+order by 1
+
+~~ Total Case, Recovered, and Death per Month
+select to_char(to_date(date,'yyyy-mm-dd'), 'mm' ) as month, sum(a.total_case) as total_case,  sum(a.total_recovered) as total_recovered, sum(a.total_death) as total_death
+from tb_covid a 
+group by 1 
+order by 1
+
+~~ Total of Monthly Active Cases
+select to_char(to_date(date, 'yyyy-mm-dd'), 'yyyy-mm'), sum(total_active)
+from tb_covid
+group by 1
+
+~~ Total of Daily Active Cases
+select date, sum(total_active) as active_cases
+from tb_covid
+group by 1 
+
+~~ Total of Active Cases Based on Province
+select province, sum(total_active) as active_cases 
+from tb_covid a 
+join tb_province b on a.province_id = b.id 
+group by 1
+
+~~ Top 5 Highest of New Cases Based on Province
+from tb_covid a 
+join tb_province b on a.province_id = b.id 
+group by 1
+order by 2 desc
+limit 5
+
+~~ Top 5 Highest of New Death Based on Province
+select Province, Max(new_death) as new_death
+from tb_covid a 
+join tb_province b on a.province_id = b.id 
+group by 1
+order by 2 desc
+limit 5
+
+~~ Top 5 Highest of New Recovered Based on Province
+select Province, Max(new_recovered) as new_recovered
+from tb_covid a 
+join tb_province b on a.province_id = b.id 
+group by 1
+order by 2 desc
+limit 5
+
